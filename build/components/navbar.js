@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
         borderRadius: 5
     }
 });
-//# sourceMappingURL=navbar.js.map
+//# sourceMappingURL=Navbar.js.map

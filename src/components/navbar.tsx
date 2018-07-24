@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Animated, Easing, TextInput, TouchableNativeFeedback } from 'react-native';
 
-export default class Navbar extends React.Component<{},{boxExpanded: Boolean}> {
+interface INavBarState {
+	boxExpanded: boolean
+}
+
+export default class Navbar extends React.Component<{},INavBarState> {
 
 	animationValue: any;
 
