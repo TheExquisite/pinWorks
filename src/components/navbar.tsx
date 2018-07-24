@@ -1,29 +1,29 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Animated, Easing, TouchableWithoutFeedback } from 'react-native';
-import { runInThisContext } from 'vm';
+import { Text, View, StyleSheet, Animated, Easing, TextInput, TouchableNativeFeedback } from 'react-native';
 
-export default class Navbar extends React.Component<{},{boxState: Boolean}> {
+export default class Navbar extends React.Component<{},{boxExpanded: Boolean}> {
 
 	animationValue: any;
 
 	constructor(props: any){
 		super(props)
 		this.animationValue = new Animated.Value(0);
+		this.toggleBox = this.toggleBox.bind(this)
 		this.state = {
-			boxState: false
+			boxExpanded: false
 		}
 	}
 
 	toggleBox(){
-		if (this.state.boxState){
+		if (this.state.boxExpanded){
 			this.animateToggle(1, 0);
 			this.setState({
-				boxState: false
+				boxExpanded: false
 			})
 		} else {
 			this.animateToggle(0, 1);
 			this.setState({
-				boxState: true
+				boxExpanded: true
 			})
 		}
 	}
@@ -38,6 +38,41 @@ export default class Navbar extends React.Component<{},{boxState: Boolean}> {
 				easing: Easing.linear
 			}
 		).start()
+	}
+
+	expandableBox(props: any){
+		const isExpanded = props.isExpanded;
+		const toggleFunction = props.toggleFunction;
+		if (isExpanded) {
+			return (
+				<View>
+					<Text onPress={toggleFunction} style={{fontSize: 20, alignSelf: 'flex-end' }}>X</Text>
+					<TextInput
+						style={{
+							height: 180,
+							width: 280,
+							backgroundColor: '#e0b32c',
+							borderColor: 'black',
+							borderRadius: 3,
+							borderWidth: 1,
+							paddingBottom: 4,
+							textAlignVertical: 'top'
+						}}
+						selectionColor={'black'}
+						multiline={true}
+					/>
+					<TouchableNativeFeedback style={{backgroundColor:'#e0b32c'}} onPress={() => console.warn("Droping pins is not implemented yet")}>
+						<Text style={{alignSelf: 'center', height: 30, width: 60}}>Drop Pin</Text>
+					</TouchableNativeFeedback>
+				</View>
+			)
+		} else {
+			return (
+				<View>
+					<Text onPress={toggleFunction} style={{fontSize: 35, paddingBottom: 4}}> + </Text>
+				</View>
+			)
+		}
 	}
 
   render(){
@@ -64,7 +99,6 @@ export default class Navbar extends React.Component<{},{boxState: Boolean}> {
     return(
 			<View>
 				<View style={styles.wrapper}>
-					<Text>This is the navbar component</Text>
 				</View>
 				<Animated.View style={{
 							position: 'absolute',
@@ -77,7 +111,7 @@ export default class Navbar extends React.Component<{},{boxState: Boolean}> {
 							backgroundColor: '#ffd147',
 							borderRadius: 5
 				}}>
-					<Text onPress={this.toggleBox.bind(this)} style={{fontSize: 35, paddingBottom: 4}}> + </Text>
+					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.state.boxExpanded}/>
 				</Animated.View>
 			</View>
     )
