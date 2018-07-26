@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet, Geolocation } from 'react-native';
+import { StyleSheet } from 'react-native';
 const initialLatitude = -27.4766589;
 const initialLongitude = 153.0241978;
 const initialLatitudeDelta = 0.0922;
@@ -19,7 +19,7 @@ export default class Map extends React.Component {
         };
     }
     componentDidMount() {
-        Geolocation.getCurrentPosition(position => {
+        navigator.geolocation.getCurrentPosition(position => {
             this.setState({
                 region: {
                     latitude: position.coords.latitude,
@@ -35,7 +35,7 @@ export default class Map extends React.Component {
             timeout: 20000,
             maximumAge: 1000
         });
-        let watch = Geolocation.watchPosition(position => {
+        let watch = navigator.geolocation.watchPosition(position => {
             this.setState({
                 region: {
                     latitude: position.coords.latitude,
@@ -49,8 +49,9 @@ export default class Map extends React.Component {
         }, {
             timeout: 20000,
             maximumAge: 1000,
-            enableHighAccuracy: true,
-            distanceFilter: 2
+            enableHighAccuracy: true
+            //need to find out to add:
+            //distanceFilter: 2
         });
         this.setState({
             watchID: watch

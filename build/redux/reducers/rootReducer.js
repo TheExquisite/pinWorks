@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux';
-const rootReducer = combineReducers({});
+import navBarReducer from './navBarReducer';
+const rootReducer = combineReducers({
+    pinBoxVis: navBarReducer
+});
 export default rootReducer;
 //# sourceMappingURL=rootReducer.js.map

@@ -1,35 +1,41 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Animated, Easing, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Text, View, StyleSheet, Animated, Easing } from 'react-native';
 
 interface INavBarState {
 	boxExpanded: boolean
 }
 
-export default class Navbar extends React.Component<{},INavBarState> {
+interface INavbarProps{
+	pinBoxVis: boolean;
+	onClick: Function;
+}
+
+export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 
 	animationValue: any;
 
 	constructor(props: any){
 		super(props)
 		this.animationValue = new Animated.Value(0);
-		this.toggleBox = this.toggleBox.bind(this)
+		this.toggleBox = this.toggleBox.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 		this.state = {
 			boxExpanded: false
 		}
 	}
 
+	handleClick(): void{
+		this.props.onClick();
+	}
+
 	toggleBox(){
-		if (this.state.boxExpanded){
+		//console.warn(this.props.pinBoxVis);
+		if (this.props.pinBoxVis){
 			this.animateToggle(1, 0);
-			this.setState({
-				boxExpanded: false
-			})
 		} else {
 			this.animateToggle(0, 1);
-			this.setState({
-				boxExpanded: true
-			})
 		}
+		this.handleClick();
 	}
 
 	animateToggle(startNum: number, finishNum: number){
@@ -47,27 +53,11 @@ export default class Navbar extends React.Component<{},INavBarState> {
 	expandableBox(props: any){
 		const isExpanded = props.isExpanded;
 		const toggleFunction = props.toggleFunction;
+		console.warn(isExpanded)
 		if (isExpanded) {
 			return (
 				<View>
 					<Text onPress={toggleFunction} style={{fontSize: 20, alignSelf: 'flex-end' }}>X</Text>
-					<TextInput
-						style={{
-							height: 180,
-							width: 280,
-							backgroundColor: '#e0b32c',
-							borderColor: 'black',
-							borderRadius: 3,
-							borderWidth: 1,
-							paddingBottom: 4,
-							textAlignVertical: 'top'
-						}}
-						selectionColor={'black'}
-						multiline={true}
-					/>
-					<TouchableNativeFeedback style={{backgroundColor:'#e0b32c'}} onPress={() => console.warn("Droping pins is not implemented yet")}>
-						<Text style={{alignSelf: 'center', height: 30, width: 60}}>Drop Pin</Text>
-					</TouchableNativeFeedback>
 				</View>
 			)
 		} else {
@@ -115,7 +105,7 @@ export default class Navbar extends React.Component<{},INavBarState> {
 							backgroundColor: '#ffd147',
 							borderRadius: 5
 				}}>
-					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.state.boxExpanded}/>
+					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis}/>
 				</Animated.View>
 			</View>
     )
