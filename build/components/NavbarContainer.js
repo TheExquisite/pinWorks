@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { navBarToggle } from "../redux/actions/navBar/navBarActions";
 import Navbar from './Navbar';
-class NavbarContiner extends React.Component {
+class NavbarContainer extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -11,10 +11,10 @@ class NavbarContiner extends React.Component {
     }
 }
 const mapStateToProps = (state) => ({
-    pinBoxVis: state.pinBoxVis
+    pinBoxVis: state.navBar.pinBoxVis
 });
 const mapDispatchToProps = (dispatch) => ({
     onToggleClick: () => dispatch(navBarToggle())
 });
-export default connect(mapStateToProps, mapDispatchToProps)(NavbarContiner);
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarContainer);
 //# sourceMappingURL=NavbarContainer.js.map

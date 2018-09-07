@@ -1,8 +1,7 @@
 import ActionTypeKeys, { ActionTypeStates } from "../actionTypes/actionTypeKeys";
 import ActionTypes from '../actionTypes/actionTypes';
 import initalState from './initalStates';
-import IStoreState from '../store/IStoreState';
-
+import IStoreState, { NavBarState } from '../store/IStoreState';
 
 export default function toggleNavBarReducer(
   state = initalState,
@@ -38,21 +37,21 @@ function actionTypeEndsInToggle( type: ActionTypeKeys ): Boolean{
   return type.substring(type.length - toggle.length) === toggle;
 }
 
-function showNavBarAction(state: IStoreState) {
+function showNavBarAction(state: NavBarState) {
   return {
     ...state,
     pinBoxVis: true
   }
 }
 
-function hideNavBarAction(state: IStoreState) {
+function hideNavBarAction(state: NavBarState) {
   return {
     ...state,
     pinBoxVis: false
   }
 }
 
-function toggleNavBarAction(state: IStoreState) {
+function toggleNavBarAction(state: NavBarState) {
   return {
     ...state,
     pinBoxVis: !state.pinBoxVis

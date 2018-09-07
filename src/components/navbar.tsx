@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Animated, Easing } from 'react-native';
+import { Text, TouchableNativeFeedback, TextInput, View, StyleSheet, Animated, Easing } from 'react-native';
 
 interface INavBarState {
 	boxExpanded: boolean
@@ -7,7 +7,7 @@ interface INavBarState {
 
 //Props typing needs fixing
 interface INavbarProps{
-	pinBoxVis: any;
+	pinBoxVis: boolean;
 	onClick: Function;
 }
 
@@ -30,7 +30,7 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 	}
 
 	toggleBox(){
-		if (this.props.pinBoxVis.pinBoxVis){
+		if (this.props.pinBoxVis){
 			this.animateToggle(1, 0);
 		} else {
 			this.animateToggle(0, 1);
@@ -53,11 +53,27 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 	expandableBox(props: any){
 		const isExpanded = props.isExpanded;
 		const toggleFunction = props.toggleFunction;
-		//console.warn(isExpanded)
 		if (isExpanded) {
 			return (
 				<View>
 					<Text onPress={toggleFunction} style={{fontSize: 20, alignSelf: 'flex-end' }}>X</Text>
+					<TextInput
+						style={{
+							height: 180,
+							width: 280,
+							backgroundColor: '#e0b32c',
+							borderColor: 'black',
+							borderRadius: 3,
+							borderWidth: 1,
+							paddingBottom: 4,
+							textAlignVertical: 'top'
+						}}
+						selectionColor={'black'}
+						multiline={true}
+					/>
+					<TouchableNativeFeedback style={{backgroundColor:'#e0b32c'}} onPress={() => console.warn("Droping pins is not implemented yet")}>
+						<Text style={{alignSelf: 'center', height: 30, width: 60}}>Drop Pin</Text>
+					</TouchableNativeFeedback>
 				</View>
 			)
 		} else {
@@ -105,7 +121,7 @@ render(){
 							backgroundColor: '#ffd147',
 							borderRadius: 5
 				}}>
-					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis.pinBoxVis}/>
+					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis}/>
 				</Animated.View>
 			</View>
     )

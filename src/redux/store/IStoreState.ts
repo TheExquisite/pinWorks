@@ -1,3 +1,7 @@
 export default interface IStoreState {
-  readonly pinBoxVis: boolean;
+  readonly navBar: NavBarState;
 };  
+
+export interface NavBarState {
+  pinBoxVis: boolean
+}

@@ -16,7 +16,7 @@ interface DispatchFromProps {
 
 interface INavBarContainerProps extends StateFromProps, DispatchFromProps{}
 
-class NavbarContiner extends React.Component<INavBarContainerProps>{
+class NavbarContainer extends React.Component<INavBarContainerProps>{
 
   constructor(props: INavBarContainerProps){
     super(props);
@@ -29,9 +29,9 @@ class NavbarContiner extends React.Component<INavBarContainerProps>{
   }
 }
 
-const mapStateToProps = (state: IStoreState): StateFromProps => (
+const mapStateToProps = (state: IStoreState) => (
   {
-    pinBoxVis: state.pinBoxVis
+    pinBoxVis: state.navBar.pinBoxVis
   }
 )
 
@@ -41,4 +41,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchFromProps => (
   }
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavbarContiner);
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarContainer);

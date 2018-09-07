@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Animated, Easing } from 'react-native';
+import { Text, TouchableNativeFeedback, TextInput, View, StyleSheet, Animated, Easing } from 'react-native';
 export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,6 @@ export default class Navbar extends React.Component {
         this.props.onClick();
     }
     toggleBox() {
-        //console.warn(this.props.pinBoxVis);
         if (this.props.pinBoxVis) {
             this.animateToggle(1, 0);
         }
@@ -34,10 +33,22 @@ export default class Navbar extends React.Component {
     expandableBox(props) {
         const isExpanded = props.isExpanded;
         const toggleFunction = props.toggleFunction;
-        console.warn(isExpanded);
         if (isExpanded) {
             return (<View>
 					<Text onPress={toggleFunction} style={{ fontSize: 20, alignSelf: 'flex-end' }}>X</Text>
+					<TextInput style={{
+                height: 180,
+                width: 280,
+                backgroundColor: '#e0b32c',
+                borderColor: 'black',
+                borderRadius: 3,
+                borderWidth: 1,
+                paddingBottom: 4,
+                textAlignVertical: 'top'
+            }} selectionColor={'black'} multiline={true}/>
+					<TouchableNativeFeedback style={{ backgroundColor: '#e0b32c' }} onPress={() => console.warn("Droping pins is not implemented yet")}>
+						<Text style={{ alignSelf: 'center', height: 30, width: 60 }}>Drop Pin</Text>
+					</TouchableNativeFeedback>
 				</View>);
         }
         else {
