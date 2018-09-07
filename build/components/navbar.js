@@ -1,27 +1,26 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Animated, Easing, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Text, TouchableNativeFeedback, TextInput, View, StyleSheet, Animated, Easing } from 'react-native';
 export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
         this.animationValue = new Animated.Value(0);
         this.toggleBox = this.toggleBox.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.state = {
             boxExpanded: false
         };
     }
+    handleClick() {
+        this.props.onClick();
+    }
     toggleBox() {
-        if (this.state.boxExpanded) {
+        if (this.props.pinBoxVis) {
             this.animateToggle(1, 0);
-            this.setState({
-                boxExpanded: false
-            });
         }
         else {
             this.animateToggle(0, 1);
-            this.setState({
-                boxExpanded: true
-            });
         }
+        this.handleClick();
     }
     animateToggle(startNum, finishNum) {
         this.animationValue.setValue(startNum);
@@ -89,7 +88,7 @@ export default class Navbar extends React.Component {
             backgroundColor: '#ffd147',
             borderRadius: 5
         }}>
-					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.state.boxExpanded}/>
+					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis}/>
 				</Animated.View>
 			</View>);
     }

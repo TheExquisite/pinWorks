@@ -1,35 +1,41 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Animated, Easing, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Text, TouchableNativeFeedback, TextInput, View, StyleSheet, Animated, Easing } from 'react-native';
 
 interface INavBarState {
 	boxExpanded: boolean
 }
 
-export default class Navbar extends React.Component<{},INavBarState> {
+//Props typing needs fixing
+interface INavbarProps{
+	pinBoxVis: boolean;
+	onClick: Function;
+}
+
+export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 
 	animationValue: any;
 
 	constructor(props: any){
 		super(props)
 		this.animationValue = new Animated.Value(0);
-		this.toggleBox = this.toggleBox.bind(this)
+		this.toggleBox = this.toggleBox.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 		this.state = {
 			boxExpanded: false
 		}
 	}
 
+	handleClick(): void{
+		this.props.onClick();
+	}
+
 	toggleBox(){
-		if (this.state.boxExpanded){
+		if (this.props.pinBoxVis){
 			this.animateToggle(1, 0);
-			this.setState({
-				boxExpanded: false
-			})
 		} else {
 			this.animateToggle(0, 1);
-			this.setState({
-				boxExpanded: true
-			})
 		}
+		this.handleClick();
 	}
 
 	animateToggle(startNum: number, finishNum: number){
@@ -79,7 +85,7 @@ export default class Navbar extends React.Component<{},INavBarState> {
 		}
 	}
 
-  render(){
+render(){
 		const boxBottomPos = this.animationValue.interpolate({
 			inputRange: [0, 1],
 			outputRange: [15, 60]
@@ -115,7 +121,7 @@ export default class Navbar extends React.Component<{},INavBarState> {
 							backgroundColor: '#ffd147',
 							borderRadius: 5
 				}}>
-					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.state.boxExpanded}/>
+					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis}/>
 				</Animated.View>
 			</View>
     )
@@ -123,7 +129,7 @@ export default class Navbar extends React.Component<{},INavBarState> {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+wrapper: {
 		height: 40,
     backgroundColor: '#ff143b'
 	},
@@ -138,5 +144,5 @@ const styles = StyleSheet.create({
     left: 155,
     backgroundColor: '#ffd147',
 		borderRadius: 5
-  }
+}
 });
