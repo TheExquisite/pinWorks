@@ -5,8 +5,9 @@ interface INavBarState {
 	boxExpanded: boolean
 }
 
+//Props typing needs fixing
 interface INavbarProps{
-	pinBoxVis: boolean;
+	pinBoxVis: any;
 	onClick: Function;
 }
 
@@ -29,8 +30,7 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 	}
 
 	toggleBox(){
-		//console.warn(this.props.pinBoxVis);
-		if (this.props.pinBoxVis){
+		if (this.props.pinBoxVis.pinBoxVis){
 			this.animateToggle(1, 0);
 		} else {
 			this.animateToggle(0, 1);
@@ -53,7 +53,7 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 	expandableBox(props: any){
 		const isExpanded = props.isExpanded;
 		const toggleFunction = props.toggleFunction;
-		console.warn(isExpanded)
+		//console.warn(isExpanded)
 		if (isExpanded) {
 			return (
 				<View>
@@ -69,7 +69,7 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 		}
 	}
 
-  render(){
+render(){
 		const boxBottomPos = this.animationValue.interpolate({
 			inputRange: [0, 1],
 			outputRange: [15, 60]
@@ -105,7 +105,7 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 							backgroundColor: '#ffd147',
 							borderRadius: 5
 				}}>
-					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis}/>
+					<this.expandableBox toggleFunction={this.toggleBox.bind(this)} isExpanded={this.props.pinBoxVis.pinBoxVis}/>
 				</Animated.View>
 			</View>
     )
@@ -113,7 +113,7 @@ export default class Navbar extends React.Component<INavbarProps,INavBarState> {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+wrapper: {
 		height: 40,
     backgroundColor: '#ff143b'
 	},
@@ -128,5 +128,5 @@ const styles = StyleSheet.create({
     left: 155,
     backgroundColor: '#ffd147',
 		borderRadius: 5
-  }
+}
 });
